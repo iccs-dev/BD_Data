@@ -2,6 +2,7 @@ import pandas as pd
 import pymysql
 import datetime
 import os
+from dateutil.relativedelta import relativedelta
 
 # ==============================
 # DB CONFIG (Direct MySQL connection)
@@ -20,9 +21,16 @@ os.makedirs(os.path.dirname(output_path), exist_ok=True)
 # ==============================
 # DATE RANGE (from 1st Jan last year to today)
 # # ==============================
+# today = datetime.date.today()
+# datefrom = datetime.date(today.year, 1, 1)   # last year's Jan 01
+# dateto = today                                   # current date
+
+
 today = datetime.date.today()
-datefrom = datetime.date(today.year, 1, 1)   # last year's Jan 01
-dateto = today                                   # current date
+start_date = today - relativedelta(months=15)
+
+datefrom = datetime.date(start_date.year, start_date.month, 1)
+dateto = today
 
 # SQL QUERIES
 # ==============================
